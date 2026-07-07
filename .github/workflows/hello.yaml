@@ -8,4 +8,4 @@ jobs:
      runs-on: ubuntu-latest
 
      steps:
-       -run: echo "Hell from AWS VPC REPO"
+       - run: echo "Hell from AWS VPC REPO"
