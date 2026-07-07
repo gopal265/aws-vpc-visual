@@ -1,0 +1,11 @@
+name: Greet Automation
+
+on:
+  push:
+
+jobs:
+  greet:
+     runs-on: ubuntu-latest
+
+     steps:
+       -run: echo "Hell from AWS VPC REPO"
