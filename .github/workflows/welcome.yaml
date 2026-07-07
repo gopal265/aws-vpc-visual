@@ -1,0 +1,15 @@
+name: Welcome Automation
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - run: echo "Welcome to AWS VPC"
+
+  
