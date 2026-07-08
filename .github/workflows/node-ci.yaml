@@ -20,5 +20,8 @@ jobs:
           node-version: 20
 
       - name: Verfity Node installation
-        run : node --version
+        run : node --versions
+
+      - name: Install Dependencies
+        run: npm install
         
