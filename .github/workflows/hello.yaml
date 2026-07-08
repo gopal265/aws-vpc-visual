@@ -1,7 +1,9 @@
 name: Greet Automation
 
 on:
-  push:
+  pull_request:
+    branches:
+      - main    
 
 jobs:
   greet:
