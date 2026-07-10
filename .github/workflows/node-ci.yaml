@@ -37,3 +37,9 @@ jobs:
         
       - name: Verfiy build
         run: ls
+
+      - name: Upload Production Build Artifact
+        uses: action/upload-artifact@v4
+        with:
+          name: react-prod-build 
+          path: dist/
