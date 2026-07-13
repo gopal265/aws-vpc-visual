@@ -41,8 +41,8 @@ jobs:
        - name: Download Artifact
          uses: artifact/download-artifact@v4
          with:
-         name: react-prod-build
-         path: dist/
+           name: react-prod-build
+           path: dist/
 
        - name: Verfiy download
          run: ls
