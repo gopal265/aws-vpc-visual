@@ -1,0 +1,49 @@
+name: Multi Job Sharing
+
+on:
+  push:
+
+jobs:
+  Artifcat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CheckOut node
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      
+      - name: Install Dependencies
+        run: npm install
+
+      - name: EsLint
+        run: npm run lint
+
+      - name: Tests
+        run: npm run test:run
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-prod-build
+          path: dist/
+  
+  Artifact_Download:
+    runs-on: ubuntu-latest
+    needs: Artifcat
+    steps:
+       - name: Download Artifact
+         uses: actions/download-artifact@v4
+         with:
+           name: react-prod-build
+           path: dist/
+
+       - name: Verfiy download
+         run: ls
+         
