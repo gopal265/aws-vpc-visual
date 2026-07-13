@@ -1,0 +1,32 @@
+name: Matrix Automation
+
+on:
+ push:
+
+jobs:
+   Build:
+    runs-on: ubuntu
+    strategy:
+       matrix:
+         node-version: [ 18, 20, 22]
+    
+    steps:
+       - name: Checkout Code
+         uses: actions/checkout@v4
+
+       - name: Install Node
+         uses: actions/setup-node@v4
+         with:
+           node-version: ${{ matrix.node-version }}
+
+       - name: Install Dependencies
+         run: npm install
+
+       - name: EsLint
+         run: npm run lint
+        
+       - name: Test
+         run: npm run test:run
+
+       - name: Build
+         run: npm run build
