@@ -1,0 +1,13 @@
+name: Greet Automation
+
+on:
+  workflow_dispatch:  
+
+jobs:
+  greet:
+     runs-on: ubuntu-latest
+
+     steps:
+       - uses: actions/checkout@4
+
+       - run: echo "Hell from AWS VPC REPO"

@@ -1,0 +1,46 @@
+name: Node CI
+
+on: 
+  workflow_dispatch:
+  # push:
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verfity Code Checkout
+        run: ls
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Verfity Node installation
+        run : node --version
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: EsLint
+        run: npm run lint
+
+      - name: Test Cases
+        run: npm run test:run
+
+      - name: build
+        run : npm run build
+        
+      - name: Verfiy build
+        run: ls
+
+      - name: Upload Production Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-prod-build 
+          path: dist/
