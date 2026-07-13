@@ -39,7 +39,7 @@ jobs:
     needs: Artifcat
     steps:
        - name: Download Artifact
-         uses: artifact/download-artifact@v4
+         uses: actions/download-artifact@v4
          with:
            name: react-prod-build
            path: dist/
