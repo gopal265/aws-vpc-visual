@@ -6,3 +6,6 @@ on:
 jobs:
   hello:
     runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Hello Devops"
