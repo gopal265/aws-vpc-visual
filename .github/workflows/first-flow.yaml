@@ -2,3 +2,7 @@ name: My First Workflow
 
 on:
   push:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
