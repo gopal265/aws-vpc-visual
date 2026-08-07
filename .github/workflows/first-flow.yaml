@@ -8,4 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "Hello Devops"
+      - name: My Name
+        run: echo "Gopal"
+      
+      - name : Topic 
+        run : "Learning Github Actions"
+
+      - name : Day
+        run : "Day 1"
