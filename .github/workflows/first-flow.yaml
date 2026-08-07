@@ -12,7 +12,7 @@ jobs:
         run: echo "Gopal"
       
       - name : Topic 
-        run : "Learning Github Actions"
+        run : echo "Learning Github Actions"
 
       - name : Day
-        run : "Day 1"
+        run : echo "Day 1"
