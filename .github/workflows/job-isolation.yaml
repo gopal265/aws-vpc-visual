@@ -1,0 +1,20 @@
+name: Job Isolation
+
+on:
+  push:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Build file
+        run: echo "Hello Github" > touch build.txt
+      
+      - name: Print the content
+        run: cat build.txt
+  
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name : Read the Build File
+        run: cat build.txt
