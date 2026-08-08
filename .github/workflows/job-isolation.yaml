@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Build file
-        run: echo "Hello Github" > touch build.txt
+        run: echo "Hello Github" > build.txt
       
       - name: Print the content
         run: cat build.txt
