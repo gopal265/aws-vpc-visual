@@ -7,14 +7,17 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - name: Create Build file
-        run: echo "Hello Github" > build.txt
+      - name: Read Linux Info
+        run: uname -a
       
-      - name: Print the content
-        run: cat build.txt
+      - name: Print the current directory
+        run: pwd
   
   job2:
-    runs-on: ubuntu-latest
+    runs-on: window-latest
     steps:
-      - name : Read the Build File
-        run: cat build.txt
+      - name : Read the OS
+        run: $env:OS
+
+      - name: Read the Processor
+        run: $env:PROCESSOR_ARCHITECTURE
