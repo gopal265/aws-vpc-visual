@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
     environment: development
     env:
       ENV_MSG: ${{ secrets.DEV_SECRET}}
