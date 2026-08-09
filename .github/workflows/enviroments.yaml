@@ -1,0 +1,20 @@
+name: Github Enviroments
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latests
+    environment: development
+    env:
+      ENV_MSG: {{ secrets.DEV_SECRET}}
+    
+    steps:
+      - name: Check Secret
+        run: |
+          if [ -n "$ENV_MSG" ]; then
+              echo "Secret is available"
+          else
+              echo "Secret is missing"
+          fi
