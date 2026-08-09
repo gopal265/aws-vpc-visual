@@ -7,7 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Tests are running"
+      - run: ech "Tests are running"
     
   build:
     runs-on: ubuntu-latest
