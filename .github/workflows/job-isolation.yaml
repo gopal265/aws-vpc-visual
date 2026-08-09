@@ -1,7 +1,7 @@
 name: Job Isolation
 
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   job1:
