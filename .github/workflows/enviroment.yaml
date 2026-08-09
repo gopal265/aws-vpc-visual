@@ -1,7 +1,7 @@
 name: Enviroment Variables
 
 on:
-  push:
+  workflow_dispatch:
 
 env:
   APP_NAME: REACT AWS VISUAL
