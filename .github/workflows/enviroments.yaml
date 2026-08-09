@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latests
     environment: development
     env:
-      ENV_MSG: {{ secrets.DEV_SECRET}}
+      ENV_MSG: ${{ secrets.DEV_SECRET}}
     
     steps:
       - name: Check Secret
