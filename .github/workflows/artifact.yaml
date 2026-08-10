@@ -1,0 +1,31 @@
+name: Artifact Flow
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build the app
+        run : echo "Hello, this is the build file" > build.txt
+
+      - name: Upload the build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build.txt
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+      
+      - name: Read the contents
+        run: ls
+
+      - name: Read the build
+        run: cat build.txt
