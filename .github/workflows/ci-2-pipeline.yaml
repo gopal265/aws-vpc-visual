@@ -34,3 +34,6 @@ jobs:
         with:
           name: prod-build
           path: ./app
+        
+      - name: Read Build
+        run: ls
