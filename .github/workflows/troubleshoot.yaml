@@ -4,10 +4,11 @@ on:
   push:
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Broken Command
-      run: |
-        echo "Starting"
-        non-exist-command
-        echo "Finished"
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Broken Command
+        run: |
+          echo "Starting"
+          non-exist-command
+          echo "Finished"
