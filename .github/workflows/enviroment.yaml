@@ -1,0 +1,27 @@
+name: Enviroment Variables
+
+on:
+  workflow_dispatch:
+
+env:
+  APP_NAME: REACT AWS VISUAL
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_ENV: production
+    steps:
+      - name : Step 1
+        env:
+          STEP_MSG: Hello
+        run: |
+          echo "$APP_NAME"
+          echo "$BUILD_ENV"
+          echo "$STEP_MSG"
+      
+      - name: Stpe 2
+        run: |
+          echo "$APP_NAME"
+          echo "$BUILD_ENV"
+          echo "$STEP_MSG"

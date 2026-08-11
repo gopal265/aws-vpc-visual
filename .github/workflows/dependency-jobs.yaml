@@ -1,0 +1,22 @@
+name: Dependency Jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ech "Tests are running"
+    
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - run: echo "Building applicaiton"
+    
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo "Deploying application"
