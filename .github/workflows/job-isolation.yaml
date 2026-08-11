@@ -1,0 +1,23 @@
+name: Job Isolation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read Linux Info
+        run: uname -a
+      
+      - name: Print the current directory
+        run: pwd
+  
+  job2:
+    runs-on: window-latest
+    steps:
+      - name : Read the OS
+        run: $env:OS
+
+      - name: Read the Processor
+        run: $env:PROCESSOR_ARCHITECTURE

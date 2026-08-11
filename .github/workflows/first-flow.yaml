@@ -1,0 +1,18 @@
+name: My First Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: My Name
+        run: echo "Gopal"
+      
+      - name : Topic 
+        run : echo "Learning Github Actions"
+
+      - name : Day
+        run : echo "Day 1"
