@@ -22,3 +22,6 @@ jobs:
       
       - name: Verify build
         run: ls -R
+
+      - name: Show build versin
+        run: "echo Build Version: ${{ needs.ci.outputs.build_version }}"

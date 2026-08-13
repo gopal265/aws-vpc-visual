@@ -12,9 +12,15 @@ on:
       build_command:
         required: true
         type: string
+    outputs:
+      build_version:
+        description: "Build version genreated by CI"
+        value: ${{ jobs.ci.outputs.build_version }}
 jobs:
   ci:
     runs-on: ubuntu-latest
+    outputs:
+      build_version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,3 +45,7 @@ jobs:
         with:
           name: prod-build
           path: dist/
+      
+      - name: Generate Build Versin
+        id: version
+        run: echo "version=1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
