@@ -33,3 +33,9 @@ jobs:
 
       - name: Run build
         run: ${{ inputs.build_command }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-build
+          path: dist/

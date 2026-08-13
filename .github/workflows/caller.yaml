@@ -10,3 +10,14 @@ jobs:
       node_version: "24"
       test_command: "npm run test:run"
       build_command: "npm run build"
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: prod-build
+      
+      - name: Verify build
+        run: ls -R
