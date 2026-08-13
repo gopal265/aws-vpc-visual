@@ -1,0 +1,12 @@
+name: Caller Workflow
+
+on:
+  push:
+
+jobs:
+  ci:
+    uses: ./.github/workflows/resuable.yaml
+    with:
+      node_version: "24"
+      test_command: "npm run test:run"
+      build_command: "npm run build"

@@ -1,0 +1,35 @@
+name: Reusable workflow
+
+on:
+  workflow_call:
+    inputs:
+      node_version:
+        required: true
+        type: string
+      test_command:
+        required: true
+        type: string
+      build_command:
+        required: true
+        type: string
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
+          cache: npm
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run test cases
+        run: ${{ inputs.test_command }}
+
+      - name: Run build
+        run: ${{ inputs.build_command }}
