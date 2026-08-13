@@ -5,7 +5,7 @@ on:
 
 jobs:
   ci:
-    uses: ./.github/workflows/resuable.yaml
+    uses: ./.github/workflows/reusable.yaml
     with:
       node_version: "24"
       test_command: "npm run test:run"
