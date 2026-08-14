@@ -21,7 +21,7 @@ jobs:
           cache: npm
       
       - name: Verify node version
-        run: echo node --version
+        run: node --version
       
       - name: Install depdencies
         run: npm ci
