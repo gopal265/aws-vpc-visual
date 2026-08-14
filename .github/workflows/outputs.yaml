@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      build_Version: ${{ steps.version.outputs.version }}
+      build_version: ${{ steps.version.outputs.version }}
     steps:
       - name: Build version number
         id: version
