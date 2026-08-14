@@ -1,7 +1,7 @@
 name: Output Flow
 
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   build:
