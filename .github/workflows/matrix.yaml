@@ -6,15 +6,19 @@ on:
 jobs:
   ci:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         node-version: [22, 24]
         os: [ ubuntu-latest, windows-latest ]
+
+        include:
+          - node-version: 26
+            os: ubuntu-latest
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout Code
-        uses: actions/checout@v4
+        uses: actions/checkout@v4
 
       - name: Install Node js
         uses: actions/setup-node@v4
