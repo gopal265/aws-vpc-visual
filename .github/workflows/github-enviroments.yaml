@@ -9,4 +9,4 @@ jobs:
     enviroment: staging
     steps:
       - name: Show enviroment
-        run: echo "The enviroment of app: ${{ vars.APP_ENV }}"
+        run: echo "The enviroment of app ${{ vars.APP_ENV }}"
