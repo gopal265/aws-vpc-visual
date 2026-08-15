@@ -47,7 +47,7 @@ jobs:
         run: echo "version=1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
   
   deploy-staging:
-    if: startsWith(github.ref, 'refs/head/release-')
+    if: startsWith(github.ref, 'refs/heads/release-')
     needs: ci
     runs-on: ubuntu-latest
     permissions: {}
@@ -67,7 +67,7 @@ jobs:
         run: ls -R
 
   deploy-production:
-    if: github.ref == "refs/head/main"
+    if: github.ref == "refs/heads/main"
     needs: ci
     concurrency:
       group: production
@@ -83,7 +83,7 @@ jobs:
 
       - name: Verify build
         run: echo "Build version ${{ needs.ci.outputs.build_version }}"
-        
+
       - name: Verify build
         run: ls -R
     
