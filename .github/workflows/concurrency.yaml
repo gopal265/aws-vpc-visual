@@ -1,7 +1,7 @@
 name: Councurrency Test
 
 on:
-  push:
+  workflow_dispatch:
 
 concurrency:
   group: my-test-group

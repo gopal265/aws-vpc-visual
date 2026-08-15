@@ -1,0 +1,12 @@
+name: Github Enviroments
+
+on:
+  push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    enviroment: staging
+    steps:
+      - name: Show enviroment
+        run: echo "The enviroment of app: ${{ vars.APP_ENV }}"
