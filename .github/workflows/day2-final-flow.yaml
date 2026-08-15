@@ -1,0 +1,89 @@
+name: Day 2 Final flow
+
+on:
+  push:
+    branches:
+      - main
+      - 'release-*'
+
+jobs:
+  ci:
+    concurrency:
+      group: ci
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      build_version: ${{ steps.version.outputs.version }}
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run test cases
+        run: npm run test:run
+      
+      - name: Run build
+        run: npm run build
+      
+      - name: Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-build
+          path: dist/
+      
+      - name: Generate build version
+        id: version
+        run: echo "version=1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+  
+  deploy-staging:
+    if: startsWith(github.ref, 'refs/head/release-')
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions: {}
+    concurrency:
+      group: staging
+      cancel-in-progress: false
+    environment: staging
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: prod-build
+      - name: Verify build
+        run: echo "Build version ${{ needs.ci.outputs.build_version }}"
+
+      - name: Verify build
+        run: ls -R
+
+  deploy-production:
+    if: github.ref == "refs/head/main"
+    needs: ci
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    permissions: {}
+    environment: production
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: prod-build
+
+      - name: Verify build
+        run: echo "Build version ${{ needs.ci.outputs.build_version }}"
+        
+      - name: Verify build
+        run: ls -R
+    
