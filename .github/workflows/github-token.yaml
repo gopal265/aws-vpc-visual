@@ -11,10 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check Github Token
-        run: |
-          if [ -n "$GITHUB_TOKEN" ]; then
-            echo "Github token exits"
-          fi
+      - name: Read repostiroy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:  gh repo view ${{ github.repository }}
