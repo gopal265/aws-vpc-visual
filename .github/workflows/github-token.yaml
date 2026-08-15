@@ -1,0 +1,27 @@
+name: Github Token
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Read repostiroy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:  gh repo view ${{ github.repository }}
+
+      - name: Create a issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --repo ${{ github.repository }} \
+            --title "Permission Test" \
+            --body "Testing github token permissions"

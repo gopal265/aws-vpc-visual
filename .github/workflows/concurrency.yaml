@@ -1,0 +1,19 @@
+name: Councurrency Test
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: my-test-group
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Long running task
+        run: sleep 60
+      
+      - name: Completion
+        run: echo "test complete"
