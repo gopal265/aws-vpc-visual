@@ -1,4 +1,4 @@
-name: Github Enviroments
+name: Github Environments
 
 on:
   push
@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    enviroment: staging
+    environment: staging
     steps:
-      - name: Show enviroment
-        run: echo "The enviroment of app ${{ vars.APP_ENV }}"
+      - name: Show environment
+        run: echo "The environment of app ${{ vars.APP_ENV }}"
