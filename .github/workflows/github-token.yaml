@@ -15,3 +15,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run:  gh repo view ${{ github.repository }}
+
+      - name: Create a issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --repo ${{ github.repository }} \
+            --title "Permission Test" \
+            --body "Testing github token permissions"
