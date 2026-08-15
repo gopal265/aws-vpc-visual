@@ -8,10 +8,10 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        node-version: [22, 24]
+        node-version: [22, 24, 26]
         os: [ ubuntu-latest, windows-latest ]
 
-        include:
+        exclude:
           - node-version: 26
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
