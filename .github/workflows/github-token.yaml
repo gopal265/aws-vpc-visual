@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check Github Token
         run: |
-          if [ - n "$GITHUB_TOKEN" ]; then
+          if [ -n "$GITHUB_TOKEN" ]; then
             echo "Github token exits"
           fi
         env:
