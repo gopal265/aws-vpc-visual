@@ -1,7 +1,10 @@
 name: Github Environments
 
 on:
-  push
+  push:
+    branches:
+      - develop
+      - main
 
 jobs:
   deploy:
