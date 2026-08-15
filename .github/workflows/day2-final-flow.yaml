@@ -67,7 +67,7 @@ jobs:
         run: ls -R
 
   deploy-production:
-    if: github.ref == "refs/heads/main"
+    if: github.ref == 'refs/heads/main'
     needs: ci
     concurrency:
       group: production
