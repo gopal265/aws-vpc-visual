@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     steps:
       - name: Show environment
         run: echo "The environment of app ${{ vars.APP_ENV }}"
