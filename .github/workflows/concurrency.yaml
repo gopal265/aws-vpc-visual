@@ -16,4 +16,4 @@ jobs:
         run: sleep 60
       
       - name: Completion
-        run: echo "test completed"
+        run: echo "test complete"
