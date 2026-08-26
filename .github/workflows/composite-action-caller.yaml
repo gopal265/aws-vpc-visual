@@ -1,0 +1,17 @@
+name: Composite Action Caller
+
+on:
+  push:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Run CI
+        uses: ./.github/workflows/composite-action.yaml
+      

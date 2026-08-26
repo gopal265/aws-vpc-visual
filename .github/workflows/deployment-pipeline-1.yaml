@@ -81,7 +81,7 @@ jobs:
           echo "Login failed "
           exit 1
 
-  deploy-producton:
+  deploy-production:
     needs: staging-smoke
     runs-on: ubuntu-latest
     environment: staging
