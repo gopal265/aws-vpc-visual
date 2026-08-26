@@ -1,0 +1,117 @@
+name: Deployment Pipeline
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+    
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run test cases
+        run: npm run test:run
+      
+      - name: build application
+        run: npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: dist/
+      
+  deploy-staging:
+    needs: ci
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: react-build
+
+      -  name: Deploy the Application
+         run: echo "Deploying the app"
+  
+
+  staging-health:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify App Health
+        run : |
+          for i in  {1..10}; do
+            if curl --fail --silent https//:myapp-dummy.com/health; then
+              echo "application is healthy"
+              exit 0
+            fi
+
+            echo "Application is not ready. Retrying ..."
+            sleep 5
+          done
+
+          echo "Deployment failed"
+          exit 1
+    
+  staging-smoke:
+    needs: staging-health
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Login smoke test
+        run: |
+          if curl --fail --silent https://myapp-dummy.com/log; then
+             echo "login is working"
+             exit 0
+          fi
+          echo "Login failed "
+          exit 1
+
+  deploy-producton:
+    needs: staging-smoke
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: react-build
+
+      -  name: Deploy the Application
+         run: echo "Deploying the app"
+  
+
+  production-health:
+    needs: deploy-production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify App Health
+        run : |
+          for i in  {1..10}; do
+            if curl --fail --silent https//:myapp-dummy-prod.com/health; then
+              echo "application is healthy"
+              exit 0
+            fi
+
+            echo "Application is not ready. Retrying ..."
+            sleep 5
+          done
+
+          echo "Deployment failed"
+          exit 1
