@@ -11,7 +11,7 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       - name: Run CI
-        uses: ./.github/workflows/composite-action.yaml
+        uses: ./.github/actions/node-ci/composite-action.yaml
       
