@@ -14,4 +14,6 @@ jobs:
 
       - name: Run CI
         uses: ./.github/actions/node-ci
+        with:
+          node-version: 24
       
