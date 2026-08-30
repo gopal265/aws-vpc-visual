@@ -1,7 +1,7 @@
 name: Caller Workflow
 
 on:
-  workflow_dispatch:
+  push:
 
 permissions:
   contents: read
@@ -17,6 +17,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: ci
+    environment: development
+    env:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -28,3 +32,13 @@ jobs:
 
       - name: Show build versin
         run: "echo Build Version: ${{ needs.ci.outputs.build_version }}"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_ROLE }}
+          aws-region: ap-southeast-2
+      
+      - name: Deploy to S3
+        run: |
+          aws s3 sync . s3://my-react-staging-4585 --delete
