@@ -18,7 +18,7 @@ on:
         value: ${{ jobs.ci.outputs.build_version }}
 
 permissions:
-  contents: read
+  contents: write
 
 
 jobs:
