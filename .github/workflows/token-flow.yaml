@@ -1,0 +1,22 @@
+name: OIDC Flow
+
+on:
+  push:
+
+jobs:
+  oidc-test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Check OIDC environment
+        run: |
+          if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+            echo "OIDC token request is available"
+          else
+            echo "OIDC token request is not available"
+            exit 1
+          fi
