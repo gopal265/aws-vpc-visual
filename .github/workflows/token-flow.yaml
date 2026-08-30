@@ -6,6 +6,11 @@ on:
 jobs:
   oidc-test:
     runs-on: ubuntu-latest
+    environment: development
+    env:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
+
 
     permissions:
       id-token: write
@@ -20,3 +25,12 @@ jobs:
             echo "OIDC token request is not available"
             exit 1
           fi
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ AWS_ACCOUNT_ID }}:role/${{ AWS_ROLE }}
+          aws-region: ap-southeast-2
+        
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
