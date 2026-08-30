@@ -13,7 +13,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run CI
+        id: node-ci
         uses: ./.github/actions/node-ci
         with:
           node-version: 24
+      
+      - name: Print node version
+        run: echo "${{ steps.node-ci.outputs.node-version }}"
       

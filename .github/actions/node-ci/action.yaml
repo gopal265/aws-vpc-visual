@@ -7,6 +7,11 @@ inputs:
     description: Node verison
     default: 24
 
+outputs:
+  node-version:
+    description: node version used
+    value: ${{ steps.node-version.outputs.version }}
+
 runs:
   using: composite
 
@@ -24,3 +29,7 @@ runs:
     - name: Run test cases
       shell: bash
       run: npm run test:run
+
+    - name: Build version
+      id: node-version
+      run: echo "version=$(node --version)" >> "$GIHUB_OUTPUT"
