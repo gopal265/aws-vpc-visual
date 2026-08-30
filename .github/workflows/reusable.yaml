@@ -47,7 +47,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: prod-build
+          name: prod-build-${{ github.run_number }}
           path: dist/
           retention-days: 3
       
