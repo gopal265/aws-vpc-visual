@@ -33,4 +33,4 @@ runs:
     - name: Build version
       id: node-version
       shell: bash
-      run: echo "version=$(node --version)" >> "$GIHUB_OUTPUT"
+      run: echo "version=$(node --version)" >> "$GITHUB_OUTPUT"
