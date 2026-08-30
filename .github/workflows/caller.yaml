@@ -11,7 +11,7 @@ jobs:
     uses: ./.github/workflows/reusable.yaml
     with:
       node_version: "24"
-      test_command: "npm run test:run"
+      test_command: "npm run test:run -- --reporter=junit --outputFile=junit.xml"
       build_command: "npm run build"
   
   deploy:

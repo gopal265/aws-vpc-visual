@@ -41,6 +41,13 @@ jobs:
       - name: Run test cases
         run: ${{ inputs.test_command }}
 
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-test-report
+          path: junit.xml
+
       - name: Run build
         run: ${{ inputs.build_command }}
       
