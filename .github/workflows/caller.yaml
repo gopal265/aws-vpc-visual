@@ -1,7 +1,7 @@
 name: Caller Workflow
 
 on:
-  push:
+  workflow_dispatch:
 
 permissions:
   contents: read
