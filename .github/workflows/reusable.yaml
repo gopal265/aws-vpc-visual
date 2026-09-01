@@ -19,6 +19,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
   
 jobs:
   ci:
@@ -63,5 +64,12 @@ jobs:
           retention-days: 3
         
       - name: Build Docker Image
-        run: docker build -t my-react-app:-${{ github.sha }} .
+        run: docker build -t my-react-app:-${{ steps.version.outputs.version }} .
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
     
