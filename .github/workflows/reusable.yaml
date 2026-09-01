@@ -72,4 +72,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag Docker Image
+        run: |
+          docker tag my-react-app:${{ steps.version.outputs.version }} \
+          ghcr.io/${{ github.repository_owner }}/my-react-app:${{ steps.version.outputs.version }}
+        
+      - name: Push Docker Image
+        run: |
+          docker push \
+            ghcr.io/${{ githtub.repository_owner }}/my-react-app:${{ steps.version.outputs.version}}
     
