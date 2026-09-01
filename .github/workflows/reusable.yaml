@@ -61,4 +61,7 @@ jobs:
           name: prod-build-${{ steps.version.outputs.version }}
           path: dist/
           retention-days: 3
+        
+      - name: Build Docker Image
+        run: docker build -t my-react-app:latest
     
