@@ -81,5 +81,5 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push \
-            ghcr.io/${{ githtub.repository_owner }}/my-react-app:${{ steps.version.outputs.version}}
+            ghcr.io/${{ github.repository_owner }}/my-react-app:${{ steps.version.outputs.version }}
     
