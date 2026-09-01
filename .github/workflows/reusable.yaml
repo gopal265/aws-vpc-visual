@@ -63,5 +63,5 @@ jobs:
           retention-days: 3
         
       - name: Build Docker Image
-        run: docker build -t my-react-app:latest
+        run: docker build -t my-react-app:latest .
     
