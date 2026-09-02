@@ -1,0 +1,36 @@
+name: OIDC Flow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  oidc-test:
+    runs-on: ubuntu-latest
+    environment: development
+    env:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
+
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Check OIDC environment
+        run: |
+          if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+            echo "OIDC token request is available"
+          else
+            echo "OIDC token request is not available"
+            exit 1
+          fi
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_ROLE }}
+          aws-region: ap-southeast-2
+        
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity

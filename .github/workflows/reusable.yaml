@@ -16,6 +16,11 @@ on:
       build_version:
         description: "Build version genreated by CI"
         value: ${{ jobs.ci.outputs.build_version }}
+
+permissions:
+  contents: read
+  packages: write
+  
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -37,15 +42,44 @@ jobs:
       - name: Run test cases
         run: ${{ inputs.test_command }}
 
-      - name: Run build
-        run: ${{ inputs.build_command }}
-
-      - name: Upload build artifact
+      - name: Upload test report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: prod-build
-          path: dist/
+          name: vitest-test-report
+          path: junit.xml
+
+      - name: Run build
+        run: ${{ inputs.build_command }}
       
       - name: Generate Build Versin
         id: version
         run: echo "version=1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-build-${{ steps.version.outputs.version }}
+          path: dist/
+          retention-days: 3
+        
+      - name: Build Docker Image
+        run: docker build -t my-react-app:${{ steps.version.outputs.version }} .
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag Docker Image
+        run: |
+          docker tag my-react-app:${{ steps.version.outputs.version }} \
+          ghcr.io/${{ github.repository_owner }}/my-react-app:${{ steps.version.outputs.version }}
+        
+      - name: Push Docker Image
+        run: |
+          docker push \
+            ghcr.io/${{ github.repository_owner }}/my-react-app:${{ steps.version.outputs.version }}
+    
