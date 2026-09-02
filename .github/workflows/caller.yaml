@@ -2,6 +2,8 @@ name: Caller Workflow
 
 on:
   push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: read
