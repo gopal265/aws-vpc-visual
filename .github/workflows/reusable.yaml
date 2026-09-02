@@ -66,7 +66,7 @@ jobs:
       - name: Build Docker Image
         run: docker build \
           -t ghcr.io/${{ github.repository_owner }}/my-react-app:${{ github.sha }} \
-          -t ghcr.io/${{ github.repository_owner }}/my-react-app:${{ github.ref_name }} |
+          -t ghcr.io/${{ github.repository_owner }}/my-react-app:${{ github.ref_name }} \
           .
 
       - name: Login to GHCR
