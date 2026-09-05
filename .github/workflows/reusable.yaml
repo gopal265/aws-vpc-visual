@@ -20,10 +20,15 @@ on:
 permissions:
   contents: read
   packages: write
+  id-token: write
   
 jobs:
   ci:
     runs-on: ubuntu-latest
+    environment: development
+    env:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
     outputs:
       build_version: ${{ steps.version.outputs.version }}
     steps:
@@ -77,12 +82,21 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
 
-      - name: Login to GHCR
-        uses: docker/login-action@v3
+      # - name: Login to GHCR
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_ROLE }}
+          aws-region: ap-southeast-2
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
         
       # - name: Push Docker Image
       #   run: |
@@ -96,6 +110,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/my-react-app:${{ github.sha}}
-            ghcr.io/${{ github.repository_owner }}/my-react-app:${{ github.ref_name}}
+            746491202548.dkr.ecr.ap-southeast-2.amazonaws.com/my-react-app:${{ github.sha}}
+            746491202548.dkr.ecr.ap-southeast-2.amazonaws.com/my-react-app:${{ github.ref_name}}
     
