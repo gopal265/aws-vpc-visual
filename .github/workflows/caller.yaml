@@ -2,10 +2,13 @@ name: Caller Workflow
 
 on:
   push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: read
   packages: write
+  id-token: write
 
 jobs:
   ci:
@@ -14,11 +17,11 @@ jobs:
       node_version: "24"
       test_command: "npm run test:run -- --reporter=junit --outputFile=junit.xml"
       build_command: "npm run build"
+    secrets: inherit
   
   deploy:
     runs-on: ubuntu-latest
     needs: ci
-    if: github.ref ==  'refs/heads/develop'
     permissions:
       id-token: write
       contents: read
@@ -38,12 +41,19 @@ jobs:
       - name: Show build versin
         run: "echo Build Version: ${{ needs.ci.outputs.build_version }}"
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_ROLE }}
-          aws-region: ap-southeast-2
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_ROLE }}
+      #     aws-region: ap-southeast-2
       
-      - name: Deploy to S3
-        run: |
-          aws s3 sync . s3://my-react-staging-4585 --delete
+      # - name: Deploy to S3
+      #   run: |
+      #     aws s3 sync . s3://my-react-staging-4585 --delete
+
+      # - name: Login to Amazon ECR
+      #   uses: aws-actions/amazon-ecr-login@v2
+
+      # - name: Verify ECR login
+      #   run: docker info
+
