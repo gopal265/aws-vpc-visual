@@ -20,7 +20,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: ci
-    if: github.ref ==  'refs/heads/develop'
     permissions:
       id-token: write
       contents: read
@@ -46,6 +45,13 @@ jobs:
           role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT }}:role/${{ env.AWS_ROLE }}
           aws-region: ap-southeast-2
       
-      - name: Deploy to S3
-        run: |
-          aws s3 sync . s3://my-react-staging-4585 --delete
+      # - name: Deploy to S3
+      #   run: |
+      #     aws s3 sync . s3://my-react-staging-4585 --delete
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Verify ECR login
+        run: docker info
+
