@@ -16,3 +16,8 @@ terraform {
 provider "aws" {
   region = "ap-southeast-2"
 }
+
+
+resource "aws_s3_bucket" "terraform_demo" {
+  bucket = "my-terraform-cicd-demo-12345"
+}
